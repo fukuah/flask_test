@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B O X E S</title>
+</head>
+<body>
+    <h3>BOXES</h3>
+    <h4 style="color: red;">{{error}}</h4>
+    <ul>
+    {% for color, pack in boxes.items() %}
+        {% for name, box in pack.items() %}
+            {% if name is defined%}
+        <li style="color: {{color}};"><a style="color: {{color}};" href="/boxes/{{color}}/{{name}}">{{name}}</a></li>
+            {% endif%}
+        {% endfor %}
+    {% endfor %}
+    </ul>
+</body>
+</html>

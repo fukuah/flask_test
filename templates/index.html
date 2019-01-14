@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>I N D E X</title>
+</head>
+<body>
+    <h5>
+    {% if username %}
+        <a href="/logout">{{username}}</a>
+    {% else %}
+        <a href="/login_form">login</a>
+    {% endif %}
+    </h5>
+    <h3>Задания</h3>
+    <ul>
+        <li><a href="/task/2">[2]</a></li>
+        <li><a href="/task/3">[3]</a></li>
+        <li><a href="/task/4">[4]</a></li>
+    </ul>
+</body>
+</html>

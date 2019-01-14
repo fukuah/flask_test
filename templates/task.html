@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>task {{count}}</title>
+</head>
+<body>
+    <h3>T A S K {{count}}</h3>
+    <p><i>The room is full of people who care…</i></p>
+    <p><i>There
+        {% if names|length == 0 %}
+            are nobody!
+        {% elif names|length == 1%}
+            is
+        {% else %}
+            are
+        {% endif %}
+    </i></p>
+    <ul>
+    {% for name in names %}
+      <li>{{name}}{% if not loop.last %},
+          {% else %}.
+          {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

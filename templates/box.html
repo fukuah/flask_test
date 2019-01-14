@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>B O X</title>
+</head>
+<body>
+    <h3>{{color}} box: {{name}}</h3>
+    {%for item, count in box.items()%}
+    <li>{{item}} {%if count > 1%} ✖<b>{{count}}</b>{%endif%}</li>
+    {%endfor%}
+</body>
+</html>
