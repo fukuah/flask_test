@@ -1,8 +1,10 @@
 import pprint
 from flask import Flask, session
 from flask import render_template, redirect, request, url_for, abort, session
+from flask_test.models import models
 
 app = Flask(__name__)
+
 app.secret_key = b'ycbe0wf4yb974w8y7bf54gerwov7678ct'
 
 # NAMES for task 2
@@ -28,6 +30,12 @@ def require_authentication(fn):
             return render_template('index.html'), 403
 
     return decorated
+
+
+@app.route('/getuser')
+def test():
+    user = models.User.get(username='admin')
+    return str(user.created_at)
 
 
 # is user authenticated
@@ -78,14 +86,14 @@ def my_boxes():
 @app.route('/boxes/<color>/<name>', methods=['GET', 'POST'])
 @require_authentication
 def my_box(color, name):
-    if not is_authorized(color, name, session.get('username')):
-        abort(403)
     if boxes.get(color).get(name) is None:
         abort(404)
 
     box = boxes[color][name]
 
     if request.method == 'POST':
+        if not is_authorized(color, name, session.get('username')):
+            abort(403)
         item = request.args.get('item')
         if item is not None:
             if item in box:
@@ -104,8 +112,10 @@ def login():
     if username is None or password is None:
         return render_template('index.html', message='Please, set both username and password.'), 400
 
-    if username in user_auth and password in user_auth[username]:
-        session['username'] = username
+    user = models.User.get(models.User.username == username and models.User.password_hash == hash(password))
+
+    if user is not None:
+        session['username'] = user.username
         return render_template('index.html', username=username), 200
 
     return render_template('index.html'), 403
@@ -116,3 +126,8 @@ def logout():
     # remove the username from the session if it's there
     session.pop('username', None)
     return redirect('/')
+
+
+@app.route('/hash/<string:password>')
+def get_hash(password):
+    return str(hash(password))
